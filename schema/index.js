@@ -18,6 +18,8 @@ const LaunchType = require('./types/launch');
 const CustomerType = require('./types/customer');
 const UserType = require('./types/users');
 const TasksType = require('./types/task');
+const TaskPlanType = require('./types/taskplan');
+
 
 // The root query type is where in the data graph begins
 const RootQueryType = new GraphQLObjectType({
@@ -44,6 +46,14 @@ const RootQueryType = new GraphQLObjectType({
             description: 'list DISTINCT Departments from ProstgresDB user table',
             resolve: (obj, args, { pgPool }) => {
                 return pgdb(pgPool).getDepartments();
+            },
+        },
+
+        Roles: {
+            type: new GraphQLList(UserType),
+            description: 'list DISTINCT Roles from ProstgresDB user table',
+            resolve: (obj, args, { pgPool }) => {
+                return pgdb(pgPool).getRoles();
             },
         },
 
@@ -106,6 +116,15 @@ const RootQueryType = new GraphQLObjectType({
                     .then((res) => res.data);
             },
         },
+        taskplans: {
+            type: new GraphQLList(TaskPlanType),
+            description: 'Return all Task Plan data from mock api',
+            resolve(parentValue, args) {
+                return axios
+                    .get(`http://localhost:${jsonServerPort}/taskplan`)
+                    .then((res) => res.data);
+            },
+        },
     },
 });
 
@@ -119,6 +138,7 @@ const RootMutationType = new GraphQLObjectType({
                 first_name: { type: GraphQLString },
                 last_name: { type: GraphQLString },
                 department: { type: GraphQLString },
+                role: { type: GraphQLString },
                 email: { type: new GraphQLNonNull(GraphQLString) },
                 apikey: { type: GraphQLString },
             },

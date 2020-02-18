@@ -16,6 +16,7 @@ const TASKS_QUERY = gql`
             status
             id
             assignedto
+            taskPlanId
         }
     }
 `;
@@ -56,6 +57,7 @@ function tasks() {
                                                     <th>Notes</th>
                                                     <th>Status</th>
                                                     <th>Assigned to</th>
+                                                    <th>Task plan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -65,6 +67,7 @@ function tasks() {
                                                         <td>{item.notes}</td>
                                                         <td>{item.status}</td>
                                                         <td>{item.assignedto}</td>
+                                                        <td>{item.taskPlanId}</td>
                                                     </tr>
                                                 ))}
                                             </tbody>

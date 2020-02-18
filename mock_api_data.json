@@ -26,5 +26,25 @@
             "Price": "$90m",
             "Currency": "USD"
         }
+    ],
+    "taskplan": [
+        {
+            "id": 1,
+            "title": "First plan ",
+            "notes": "Tout va bien mercher",
+            "status": "Pending",
+            "flight_number": 6,
+            "requiredAt": "18/02/2020",
+            "completedAt": "18/02/2020"
+        },
+        {
+            "id": 2,
+            "title": "Second plan ",
+            "notes": "Ca va mercher un jour",
+            "status": "Pending",
+            "flight_number": 2,
+            "requiredAt": "20/02/2020",
+            "completedAt": "18/03/2020"
+        }
     ]
 }

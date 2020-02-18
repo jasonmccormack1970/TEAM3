@@ -17,5 +17,7 @@ module.exports = new GraphQLObjectType({
         email: { type: new GraphQLNonNull(GraphQLString) },
         apikey: { type: GraphQLString },
         createdAt: { type: GraphQLString },
+        role: { type: GraphQLString },
+        hiredAt: { type: GraphQLString },
     },
 });

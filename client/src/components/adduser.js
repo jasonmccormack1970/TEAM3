@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getDeptQuery, addNewUserMutation } from '../queries/queries';
+import { getDeptQuery, addNewUserMutation, getRoleQuery } from '../queries/queries';
 import { flowRight as compose } from 'lodash';
 import { graphql } from 'react-apollo';
 import crypto from 'crypto';
@@ -12,6 +12,7 @@ class AddDataTest extends Component {
             first_name: '',
             last_name: '',
             department: '',
+            role: '',
             email: '',
             apikey: '',
         };
@@ -32,6 +33,21 @@ class AddDataTest extends Component {
         }
     }
 
+    getRoles() {
+        let data = this.props.getRoleQuery;
+        if (data.loading) {
+            return <option disabled>Loading data .... </option>;
+        } else {
+            return data.Roles.map((item) => {
+                return (
+                    <option key={item.role} value={item.role}>
+                        {item.role}
+                    </option>
+                );
+            });
+        }
+    }
+
     refreshPage() {
         window.location.reload(true);
     }
@@ -43,6 +59,7 @@ class AddDataTest extends Component {
                 first_name: this.state.first_name,
                 last_name: this.state.last_name,
                 department: this.state.department,
+                role: this.state.role,
                 email: this.state.email,
                 // generate a random API Key code
                 apikey: crypto.randomBytes(Math.ceil(10 / 2)).toString('hex'),
@@ -83,6 +100,14 @@ class AddDataTest extends Component {
                     </div>
 
                     <div className="field">
+                        <label>Role Name:</label>
+                        <br />
+                        <select onChange={(e) => this.setState({ role: e.target.value })}>
+                            {this.getRoles()}
+                        </select>
+                    </div>
+
+                    <div className="field">
                         <label>Email Address:</label>
                         <br />
                         <input
@@ -101,5 +126,6 @@ class AddDataTest extends Component {
 // Using compose to bind multiple (queries) to the (component)
 export default compose(
     graphql(getDeptQuery, { name: 'getDeptQuery' }),
+    graphql(getRoleQuery, { name: 'getRoleQuery' }),
     graphql(addNewUserMutation, { name: 'addNewUserMutation' }),
 )(AddDataTest);

@@ -17,5 +17,8 @@ module.exports = new GraphQLObjectType({
         status: { type: GraphQLString },
         assignedto: { type: new GraphQLNonNull(GraphQLInt) },
         // status: { type: new GraphQLNonNull(TaskStatusType) },
-    },
+        requiredAt: { type: GraphQLString },
+        completedAt: { type: GraphQLString },
+        taskPlanId: { type: GraphQLInt },
+        },
 });

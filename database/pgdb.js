@@ -10,6 +10,14 @@ module.exports = (pgPool) => {
                 });
         },
 
+        getRoles() {
+            return pgPool
+                .query(`select DISTINCT role as role from users`)
+                .then((res) => {
+                    return humps.camelizeKeys(res.rows);
+                });
+        },
+
         getAllUsers() {
             return pgPool.query(`select * from users`).then((res) => {
                 return humps.camelizeKeys(res.rows);
@@ -49,16 +57,16 @@ module.exports = (pgPool) => {
                 });
         },
 
-        addNewUser({ email, first_name, last_name, department, apikey }) {
+        addNewUser({ email, first_name, last_name, department, role, apikey }) {
             return pgPool
                 .query(
                     `
                     INSERT INTO public.users(
-                        email, first_name, last_name, department, apikey)
-                        VALUES  ($1, $2, $3, $4, $5)
+                        email, first_name, last_name, department, role, apikey)
+                        VALUES  ($1, $2, $3, $4, $5, $6)
                     returning *
                     `,
-                    [email, first_name, last_name, department, apikey],
+                    [email, first_name, last_name, department, role, apikey],
                 )
                 .then((res) => {
                     return humps.camelizeKeys(res.rows[0]);

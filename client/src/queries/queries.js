@@ -8,6 +8,7 @@ const getUsersQuery = gql`
             fullName
             email
             department
+            role
             id
             active
             apikey
@@ -23,11 +24,20 @@ const getDeptQuery = gql`
     }
 `;
 
+const getRoleQuery = gql`
+    query GetRoleQuery {
+        Roles {
+            role
+        }
+    }
+`;
+
 const addNewUserMutation = gql`
     mutation(
         $first_name: String
         $last_name: String
         $department: String
+        $role: String
         $email: String!
         $apikey: String
     ) {
@@ -35,6 +45,7 @@ const addNewUserMutation = gql`
             first_name: $first_name
             last_name: $last_name
             department: $department
+            role: $role
             email: $email
             apikey: $apikey
         ) {
@@ -43,4 +54,4 @@ const addNewUserMutation = gql`
     }
 `;
 
-export { getUsersQuery, getDeptQuery, addNewUserMutation };
+export { getUsersQuery, getDeptQuery, addNewUserMutation, getRoleQuery };
